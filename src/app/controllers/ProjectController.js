@@ -27,6 +27,21 @@ class ProjectController {
 
     return res.json(project);
   }
+
+  // Update the project
+  async update(req, res) {
+    const { title } = req.body;
+    const { id } = req.params;
+
+    // Checks if the project exist in our system
+    const project = projects.find(p => p.id === id);
+    if (!project)
+      return res.status(404).json({ error: true, msg: 'Project not found.' });
+
+    project.title = title;
+
+    return res.json(project);
+  }
 }
 
 export default new ProjectController();

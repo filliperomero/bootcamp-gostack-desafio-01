@@ -55,6 +55,19 @@ class ProjectController {
 
     return res.send();
   }
+
+  // Create Task on the specific Project
+  async storeTask(req, res) {
+    const { id } = req.params;
+    const { title: taskTitle } = req.body;
+
+    const project = projects.find(p => p.id === id);
+    if (!project)
+      return res.status(404).json({ error: true, msg: 'Project not found.' });
+
+    project.tasks.push(taskTitle);
+    return res.json(project);
+  }
 }
 
 export default new ProjectController();

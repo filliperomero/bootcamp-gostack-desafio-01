@@ -42,6 +42,19 @@ class ProjectController {
 
     return res.json(project);
   }
+
+  // Delete specific project
+  async delete(req, res) {
+    const { id } = req.params;
+
+    const projectId = projects.findIndex(project => project.id === id);
+    if (projectId === -1)
+      return res.status(404).json({ error: true, msg: 'Project not found.' });
+
+    projects.splice(projectId, 1);
+
+    return res.send();
+  }
 }
 
 export default new ProjectController();
